@@ -75,9 +75,9 @@ class HorizontalPortfolio {
       this.lastScrollTime = now
       
       if (delta > 0) {
-        this.nextSection()
-      } else {
         this.prevSection()
+      } else {
+        this.nextSection()
       }
     }
   }
