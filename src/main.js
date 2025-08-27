@@ -5,6 +5,7 @@ class LShapePortfolio {
   constructor() {
     this.container = document.querySelector('.container')
     this.sections = document.querySelectorAll('.section')
+    this.navItems = document.querySelectorAll('.nav-item')
     
     this.currentSection = 0
     this.totalSections = this.sections.length
@@ -24,6 +25,7 @@ class LShapePortfolio {
   init() {
     this.setupInitialState()
     this.bindEvents()
+    this.updateNavigation()
   }
   
   setupInitialState() {
@@ -50,6 +52,14 @@ class LShapePortfolio {
     
     // Keyboard navigation
     window.addEventListener('keydown', this.handleKeyDown.bind(this))
+    
+    // Navigation dots click
+    this.navItems.forEach(item => {
+      item.addEventListener('click', (e) => {
+        const sectionIndex = parseInt(e.currentTarget.dataset.section)
+        this.goToSection(sectionIndex)
+      })
+    })
   }
   
   handleWheel(e) {
@@ -107,12 +117,12 @@ class LShapePortfolio {
     if (this.isAnimating) return
     
     switch (e.key) {
-      case 'ArrowRight':
+      case 'ArrowDown':
       case ' ':
         e.preventDefault()
         this.nextSection()
         break
-      case 'ArrowLeft':
+      case 'ArrowUp':
         e.preventDefault()
         this.prevSection()
         break
@@ -185,6 +195,18 @@ class LShapePortfolio {
       ease: "power2.inOut", 
       onComplete: () => {
         this.isAnimating = false
+      }
+    })
+    
+    this.updateNavigation()
+  }
+  
+  updateNavigation() {
+    this.navItems.forEach((item, index) => {
+      if (index === this.currentSection) {
+        item.classList.add('active')
+      } else {
+        item.classList.remove('active')
       }
     })
   }
