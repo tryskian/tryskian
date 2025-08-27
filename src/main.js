@@ -1,7 +1,7 @@
 import './style.css'
 import { gsap } from 'gsap'
 
-class HorizontalPortfolio {
+class LShapePortfolio {
   constructor() {
     this.container = document.querySelector('.container')
     this.sections = document.querySelectorAll('.section')
@@ -10,9 +10,13 @@ class HorizontalPortfolio {
     this.totalSections = this.sections.length
     this.isAnimating = false
     
+    // L-shape navigation zones
+    this.verticalZone = [0, 1, 2, 3, 4] // sections 1-5
+    this.horizontalZone = [4, 5, 6, 7] // sections 5-8 (5 is shared)
+    
     // Smooth scrolling properties
     this.lastScrollTime = 0
-    this.scrollCooldown = 200 // Reduce cooldown for better responsiveness
+    this.scrollCooldown = 200
     
     this.init()
   }
@@ -23,17 +27,8 @@ class HorizontalPortfolio {
   }
   
   setupInitialState() {
-    // Set initial position
-    gsap.set(this.container, { x: 0 })
-    
-    // Force exact section dimensions
-    const viewportWidth = Math.floor(window.innerWidth)
-    this.sections.forEach((section) => {
-      section.style.width = `${viewportWidth}px`
-      section.style.minWidth = `${viewportWidth}px`
-      section.style.maxWidth = `${viewportWidth}px`
-      section.style.flexBasis = `${viewportWidth}px`
-    })
+    // Set initial position to section 1
+    gsap.set(this.container, { x: 0, y: 0 })
   }
   
   bindEvents() {
@@ -62,23 +57,34 @@ class HorizontalPortfolio {
     
     if (this.isAnimating) return
     
-    // More responsive scrolling - reduced debouncing
     const now = Date.now()
     if (now - this.lastScrollTime < this.scrollCooldown) {
       return
     }
     
     const delta = e.deltaY || e.deltaX
-    const threshold = 25 // Lower threshold for more responsive scrolling
+    const threshold = 25
     
     if (Math.abs(delta) > threshold) {
       this.lastScrollTime = now
       
       if (delta > 0) {
-        this.prevSection()
-      } else {
         this.nextSection()
+      } else {
+        this.prevSection()
       }
+    }
+  }
+  
+  nextSection() {
+    if (this.currentSection < this.totalSections - 1) {
+      this.goToSection(this.currentSection + 1)
+    }
+  }
+  
+  prevSection() {
+    if (this.currentSection > 0) {
+      this.goToSection(this.currentSection - 1)
     }
   }
   
@@ -131,35 +137,56 @@ class HorizontalPortfolio {
     this.isAnimating = true
     this.currentSection = index
     
-    // Calculate position with exact viewport precision
     const viewportWidth = Math.floor(window.innerWidth)
-    const targetX = -index * viewportWidth
+    const viewportHeight = Math.floor(window.innerHeight)
     
-    console.log(`Going to section ${index}/${this.totalSections-1}, targetX: ${targetX}, viewport: ${viewportWidth}`) // Debug log
+    let targetX = 0
+    let targetY = 0
     
-    // Force exact positioning before animation
-    this.sections.forEach((section, i) => {
-      section.style.width = `${viewportWidth}px`
-      section.style.minWidth = `${viewportWidth}px`
-      section.style.maxWidth = `${viewportWidth}px`
-    })
+    // Reverse-L positioning logic
+    switch(index) {
+      case 0: // hero
+        targetX = 0
+        targetY = 0
+        break
+      case 1: // what i do
+        targetX = -viewportWidth
+        targetY = 0
+        break
+      case 2: // proj 1
+        targetX = -viewportWidth
+        targetY = -viewportHeight
+        break
+      case 3: // proj 2
+        targetX = -viewportWidth
+        targetY = -2 * viewportHeight
+        break
+      case 4: // archive
+        targetX = -viewportWidth
+        targetY = -3 * viewportHeight
+        break
+      case 5: // about
+        targetX = -2 * viewportWidth
+        targetY = -3 * viewportHeight
+        break
+      case 6: // say hi
+        targetX = -3 * viewportWidth
+        targetY = -3 * viewportHeight
+        break
+    }
     
-    // Smooth but more responsive animation
+    console.log(`Going to section ${index}, targetX: ${targetX}, targetY: ${targetY}`)
+    
+    // Animate to new position
     gsap.to(this.container, {
       x: targetX,
-      duration: 1.0, // Slightly faster duration
+      y: targetY,
+      duration: 1.0,
       ease: "power2.inOut", 
       onComplete: () => {
         this.isAnimating = false
-        // Force pixel-perfect positioning
-        gsap.set(this.container, { 
-          x: targetX,
-          force3D: true // Ensure GPU acceleration
-        })
       }
     })
-    
-    this.updateActiveSection(index)
   }
   
   updateActiveSection(index) {
@@ -169,7 +196,7 @@ class HorizontalPortfolio {
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-  const portfolio = new HorizontalPortfolio()
+  const portfolio = new LShapePortfolio()
   
   // Handle window resize with debouncing
   let resizeTimeout
@@ -179,12 +206,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     resizeTimeout = setTimeout(() => {
-      const viewportWidth = Math.floor(window.innerWidth)
-      const targetX = -portfolio.currentSection * viewportWidth
-      gsap.set(portfolio.container, { 
-        x: targetX,
-        force3D: true
-      })
+      // Recalculate current position after resize
+      portfolio.goToSection(portfolio.currentSection)
     }, 100)
   })
 })

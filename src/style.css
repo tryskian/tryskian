@@ -18,11 +18,11 @@ html, body {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: white;
+  color: #1F1F1F;
 }
 
 body {
-  background: #000;
+  background: #FEFEFE;
   position: relative;
 }
 
@@ -50,15 +50,13 @@ body::before {
   z-index: 1;
 }
 
-/* Main Container */
+/* Main Container - L-shaped layout */
 .container {
-  display: flex;
-  width: 800vw; /* 8 sections × 100vw each */
-  height: 100vh;
   position: absolute;
   top: 0;
   left: 0;
-  overflow: hidden;
+  width: 100vw;
+  height: 500vh; /* 5 vertical sections */
   transform: translate3d(0, 0, 0); /* Force GPU acceleration */
 }
 
@@ -69,41 +67,45 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  flex-shrink: 0 !important;
-  flex-grow: 0 !important;
-  flex-basis: 100vw !important;
+  position: absolute;
   overflow: hidden;
-  min-width: 100vw;
-  max-width: 100vw;
 }
+
+/* Reverse-L layout positioning */
+.hero { top: 0; left: 0; } 
+.what-i-do { top: 0; left: 100vw; } 
+.proj-1 { top: 100vh; left: 100vw; } 
+.proj-2 { top: 200vh; left: 100vw; } 
+.archive { top: 300vh; left: 100vw; } 
+.about { top: 300vh; left: 200vw; } 
+.say-hi { top: 300vh; left: 300vw; }
 
 .content {
   text-align: center;
-  color: white;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  color: #1F1F1F;
+  text-shadow: none;
 }
 
 .content h1 {
   font-size: 4rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  color: white;
+  color: #1F1F1F;
 }
 
 .content p {
   font-size: 1.5rem;
   font-weight: 300;
-  opacity: 0.9;
-  color: white;
+  opacity: 0.8;
+  color: #1F1F1F;
 }
 
-/* Section Background Colors */
-.section-1 { background: #FF6B6B; } /* Red */
-.section-2 { background: #4ECDC4; } /* Teal */
-.section-3 { background: #45B7D1; } /* Blue */
-.section-4 { background: #96CEB4; } /* Green */
-.section-5 { background: #FECA57; } /* Yellow */
-.section-6 { background: #FF9FF3; } /* Pink */
-.section-7 { background: #54A0FF; } /* Light Blue */
+/* Section Background - Clean minimal */
+.hero { background: #FEFEFE; }
+.what-i-do { background: #FEFEFE; }
+.proj-1 { background: #FEFEFE; }
+.proj-2 { background: #FEFEFE; }
+.archive { background: #FEFEFE; }
+.about { background: #FEFEFE; }
+.say-hi { background: #FEFEFE; }
 .section-8 { background: #5F27CD; } /* Purple */
