@@ -24,6 +24,12 @@ html, body {
 body {
   background: #FEFEFE;
   position: relative;
+  cursor: default;
+  isolation: isolate;
+}
+
+html {
+  isolation: isolate;
 }
 
 /* Navigation System */
@@ -262,11 +268,40 @@ body::before {
   height: 70vh;
 }
 
-.image-collage img {
+.image-collage img,
+.placeholder-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 4px;
+}
+
+.placeholder-image {
+  background: #FEFEFE;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border: 1px solid #1F1F1F;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.placeholder-image:hover {
+  opacity: 0.8;
+}
+
+.placeholder-image::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(45deg, transparent 49.5%, #1F1F1F 49.5%, #1F1F1F 50.5%, transparent 50.5%),
+    linear-gradient(-45deg, transparent 49.5%, #1F1F1F 49.5%, #1F1F1F 50.5%, transparent 50.5%);
+  background-size: 100% 100%;
 }
 
 .img-large {
@@ -284,25 +319,30 @@ body::before {
   grid-row: span 1;
 }
 
-/* About Section Styling */
+/* About Section Layout */
+.about-layout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+  padding: 0 8rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100vh;
+}
+
 .about-image {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
-}
-
-.placeholder-image {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-shrink: 0;
 }
 
 .about-content {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 2rem;
+  gap: 1.5rem;
+  max-width: 500px;
 }
 
 .about-content h2 {
@@ -425,6 +465,142 @@ body::before {
 
 .form-button:hover {
   background: #333;
+}
+
+/* Full-Screen Lightbox */
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 10000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  cursor: pointer;
+  z-index: 10001;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease;
+}
+
+.lightbox-close svg {
+  width: 40px;
+  height: 40px;
+  transition: opacity 0.3s ease;
+}
+
+.lightbox-close:hover svg {
+  opacity: 0.7;
+}
+
+.lightbox-close:hover {
+  opacity: 0.7;
+}
+
+.lightbox-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.lightbox-image {
+  flex: 1;
+  max-width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-image img {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.lightbox-info {
+  flex: 1;
+  max-width: 40%;
+  color: #FEFEFE;
+  padding-left: 2rem;
+}
+
+.lightbox-info h3 {
+  font-size: 2.5rem;
+  font-weight: 300;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.lightbox-info p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2rem;
+  pointer-events: none;
+}
+
+.lightbox-prev,
+.lightbox-next {
+  background: none;
+  border: none;
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+  pointer-events: all;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease;
+}
+
+.lightbox-prev svg,
+.lightbox-next svg {
+  width: 40px;
+  height: 40px;
+  transition: opacity 0.3s ease;
+}
+
+.lightbox-prev:hover svg,
+.lightbox-next:hover svg {
+  opacity: 0.7;
+}
+
+.lightbox-prev:hover,
+.lightbox-next:hover {
+  opacity: 0.7;
 }
 
 /* Section Background - Clean minimal */

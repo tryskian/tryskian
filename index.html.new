@@ -130,34 +130,38 @@
             </div>
             <div class="right-column">
               <div class="image-collage">
-                <div class="placeholder-image img-large"></div>
-                <div class="placeholder-image img-small"></div>
-                <div class="placeholder-image img-medium"></div>
-                <div class="placeholder-image img-medium"></div>
-                <div class="placeholder-image img-small"></div>
-                <div class="placeholder-image img-large"></div>
+                <img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=400&h=600" alt="Archive Image" class="img-large">
+                <img src="https://images.unsplash.com/photo-1561736778-92e52a7769ef?w=400&h=400" alt="Archive Image" class="img-small">
+                <img src="https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=400&h=600" alt="Archive Image" class="img-medium">
+                <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&h=400" alt="Archive Image" class="img-medium">
+                <img src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=400&h=400" alt="Archive Image" class="img-small">
+                <img src="https://images.unsplash.com/photo-1542744094-3a31f272c490?w=400&h=600" alt="Archive Image" class="img-large">
               </div>
             </div>
           </div>
         </section>
 
         <section class="section about" data-bg="#FF9FF3">
-          <div class="about-layout">
-            <div class="about-image">
-              <div class="placeholder-image">
-                <svg width="300" height="300" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="1" y="1" width="298" height="298" stroke="#1F1F1F" stroke-width="1" fill="none"/>
-                  <line x1="1" y1="1" x2="299" y2="299" stroke="#1F1F1F" stroke-width="1"/>
-                  <line x1="299" y1="1" x2="1" y2="299" stroke="#1F1F1F" stroke-width="1"/>
-                </svg>
+          <div class="container-layout">
+            <div class="left-column">
+              <div class="about-image">
+                <div class="placeholder-image">
+                  <svg width="300" height="300" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="1" y="1" width="298" height="298" stroke="#1F1F1F" stroke-width="2" fill="none"/>
+                    <line x1="1" y1="1" x2="299" y2="299" stroke="#1F1F1F" stroke-width="1"/>
+                    <line x1="299" y1="1" x2="1" y2="299" stroke="#1F1F1F" stroke-width="1"/>
+                  </svg>
+                </div>
               </div>
             </div>
-            <div class="about-content">
-              <h2>About</h2>
-              <p class="about-intro">Creative strategist and design leader with a passion for meaningful brand experiences.</p>
-              <p class="about-description">I believe in design that goes beyond aesthetics—creating visual systems and brand narratives that resonate deeply with audiences and drive authentic connection.</p>
-              <p class="about-approach">My approach combines strategic thinking with creative intuition, always seeking the intersection where business goals meet human needs.</p>
-              <p class="about-experience">With over a decade of experience across agencies, startups, and collaborative ventures, I've learned that the best creative work emerges from understanding, empathy, and relentless curiosity.</p>
+            <div class="right-column">
+              <div class="about-content">
+                <h2>About</h2>
+                <p class="about-intro">Creative strategist and design leader with a passion for meaningful brand experiences.</p>
+                <p class="about-description">I believe in design that goes beyond aesthetics—creating visual systems and brand narratives that resonate deeply with audiences and drive authentic connection.</p>
+                <p class="about-approach">My approach combines strategic thinking with creative intuition, always seeking the intersection where business goals meet human needs.</p>
+                <p class="about-experience">With over a decade of experience across agencies, startups, and collaborative ventures, I've learned that the best creative work emerges from understanding, empathy, and relentless curiosity.</p>
+              </div>
             </div>
           </div>
         </section>
@@ -182,38 +186,6 @@
         </section>
       </div>
     </div>
-    
-    <!-- Full-Screen Lightbox -->
-    <div class="lightbox" id="lightbox">
-      <div class="lightbox-close" id="lightbox-close">
-        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <line x1="8" y1="8" x2="32" y2="32" stroke="#FEFEFE" stroke-width="2" stroke-linecap="round"/>
-          <line x1="32" y1="8" x2="8" y2="32" stroke="#FEFEFE" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <div class="lightbox-content">
-        <div class="lightbox-image">
-          <img id="lightbox-img" src="" alt="">
-        </div>
-        <div class="lightbox-info">
-          <h3 id="lightbox-title">Project Title</h3>
-          <p id="lightbox-description">Project description goes here.</p>
-        </div>
-      </div>
-      <div class="lightbox-nav">
-        <button class="lightbox-prev" id="lightbox-prev">
-          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <polyline points="24,12 16,20 24,28" stroke="#FEFEFE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-        <button class="lightbox-next" id="lightbox-next">
-          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <polyline points="16,12 24,20 16,28" stroke="#FEFEFE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-    
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
