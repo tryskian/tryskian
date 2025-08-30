@@ -99,17 +99,22 @@ class HorizontalPortfolio {
     const delta = e.deltaY
     const threshold = 50
     
+    console.log(`Scroll detected - deltaY: ${delta}, threshold: ${threshold}`)
+    
     if (Math.abs(delta) < threshold) {
+      console.log('Scroll too small, ignoring')
       return
     }
     
     this.lastScrollTime = now
     
-    // Normal scroll direction - like any website
+    // Inverted scroll direction - scroll down goes to lower section numbers
     if (delta > 0) {
-      this.navigateNext() // Scroll down goes to next section in L-pattern
+      console.log('Scroll DOWN detected -> navigatePrevious() (to lower section)')
+      this.navigatePrevious() // Scroll down goes to previous section (s1 direction)
     } else {
-      this.navigatePrevious() // Scroll up goes to previous section in L-pattern
+      console.log('Scroll UP detected -> navigateNext() (to higher section)')
+      this.navigateNext() // Scroll up goes to next section (s7 direction)
     }
   }
   
@@ -129,18 +134,32 @@ class HorizontalPortfolio {
   }
   
   navigateNext() {
-    if (this.isAnimating) return
+    console.log('navigateNext called, current:', this.currentSection, 'total:', this.totalSections)
+    if (this.isAnimating) {
+      console.log('Animation in progress, skipping')
+      return
+    }
     
     if (this.currentSection < this.totalSections - 1) {
+      console.log('Moving from section', this.currentSection, 'to', this.currentSection + 1)
       this.navigateToSection(this.currentSection + 1)
+    } else {
+      console.log('Already at last section')
     }
   }
   
   navigatePrevious() {
-    if (this.isAnimating) return
+    console.log('navigatePrevious called, current:', this.currentSection)
+    if (this.isAnimating) {
+      console.log('Animation in progress, skipping')
+      return
+    }
     
     if (this.currentSection > 0) {
+      console.log('Moving from section', this.currentSection, 'to', this.currentSection - 1)
       this.navigateToSection(this.currentSection - 1)
+    } else {
+      console.log('Already at first section')
     }
   }
   
