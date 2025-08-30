@@ -255,16 +255,13 @@ class LShapePortfolio {
     this.lightboxTitle = document.getElementById('lightbox-title')
     this.lightboxDescription = document.getElementById('lightbox-description')
     this.lightboxClose = document.getElementById('lightbox-close')
-    this.lightboxPrev = document.getElementById('lightbox-prev')
-    this.lightboxNext = document.getElementById('lightbox-next')
+    this.lightboxDots = document.getElementById('lightbox-dots')
     
     // Add click listeners to placeholder images
     this.setupImageClickListeners()
     
     // Lightbox controls
     this.lightboxClose.addEventListener('click', () => this.closeLightbox())
-    this.lightboxPrev.addEventListener('click', () => this.prevImage())
-    this.lightboxNext.addEventListener('click', () => this.nextImage())
     
     // Keyboard controls
     document.addEventListener('keydown', (e) => {
@@ -346,10 +343,33 @@ class LShapePortfolio {
       this.lightboxTitle.textContent = this.currentProject.title
       this.lightboxDescription.textContent = this.currentProject.description
       
-      // Show/hide nav buttons based on image count
-      const hasMultipleImages = this.currentProject.images.length > 1
-      this.lightboxPrev.style.display = hasMultipleImages ? 'flex' : 'none'
-      this.lightboxNext.style.display = hasMultipleImages ? 'flex' : 'none'
+      // Update dots
+      this.updateLightboxDots()
+    }
+  }
+  
+  updateLightboxDots() {
+    if (!this.currentProject) return
+    
+    // Clear existing dots
+    this.lightboxDots.innerHTML = ''
+    
+    // Create dots for each image
+    this.currentProject.images.forEach((_, index) => {
+      const dot = document.createElement('div')
+      dot.className = `lightbox-dot ${index === this.currentImageIndex ? 'active' : ''}`
+      dot.addEventListener('click', () => {
+        this.currentImageIndex = index
+        this.updateLightboxContent()
+      })
+      this.lightboxDots.appendChild(dot)
+    })
+    
+    // Hide dots if only one image
+    if (this.currentProject.images.length <= 1) {
+      this.lightboxDots.style.display = 'none'
+    } else {
+      this.lightboxDots.style.display = 'flex'
     }
   }
   
