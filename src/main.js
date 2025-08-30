@@ -170,7 +170,6 @@ class HorizontalPortfolio {
     
     this.isAnimating = true
     this.currentSection = sectionIndex
-    
     const targetPosition = this.positions[sectionIndex]
     
     console.log(`Going to section ${sectionIndex + 1}/${this.totalSections}`)

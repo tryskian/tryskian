@@ -32,12 +32,12 @@ The navigation is **linear like 7 vertical sections** (1→2→3→4→5→6→7
 
 ## Development Patterns
 
-**Scroll Direction Logic (Inverted):**
+**Scroll Direction Logic (Normal - WORKING VERSION):**
 ```js
 if (delta > 0) {
-  this.navigatePrevious()  // Scroll down: section 7→6→5→4→3→2→1
+  this.navigateNext()  // Scroll down: section 1→2→3→4→5→6→7
 } else {
-  this.navigateNext()  // Scroll up: section 1→2→3→4→5→6→7
+  this.navigatePrevious()  // Scroll up: section 7→6→5→4→3→2→1
 }
 ```
 
