@@ -183,10 +183,10 @@ html {
 
 .accent-image {
   position: absolute;
-  right: 3vw;
-  top: 4vh;
-  width: 20vw;
-  max-width: 40vh;
+  right: 7vw;
+  top: 8vh;
+  width: 16vw;
+  max-width: 212px;
   aspect-ratio: 212/274;
 }
 
