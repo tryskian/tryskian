@@ -95,48 +95,27 @@ class HorizontalPortfolio {
       return
     }
     
-    // Check if we're in the archive section (index 4)
-    const isArchiveSection = this.currentSection === 4
-    
     // Add threshold to prevent small scroll events from triggering navigation
-    const deltaY = e.deltaY
-    const deltaX = e.deltaX
+    const delta = e.deltaY
     const threshold = 50
     
-    console.log(`Scroll detected - deltaY: ${deltaY}, deltaX: ${deltaX}, section: ${this.currentSection}`)
+    console.log(`Scroll detected - deltaY: ${delta}, threshold: ${threshold}`)
     
-    if (isArchiveSection) {
-      // In archive section: horizontal scroll stays in section, vertical scroll navigates
-      if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > threshold) {
-        // Horizontal scroll - handle archive timeline navigation
-        console.log('Archive horizontal scroll:', deltaX > 0 ? 'right' : 'left')
-        this.handleArchiveScroll(deltaX)
-        return
-      }
-    }
-    
-    // Regular vertical navigation for all sections (including archive vertical scroll)
-    if (Math.abs(deltaY) < threshold) {
+    if (Math.abs(delta) < threshold) {
       console.log('Scroll too small, ignoring')
       return
     }
     
     this.lastScrollTime = now
     
-    // Inverted scroll direction (your working version)
-    if (deltaY > 0) {
-      console.log('Scroll DOWN -> navigatePrevious() (to lower section)')
+    // Inverted scroll direction - scroll down goes to lower section numbers
+    if (delta > 0) {
+      console.log('Scroll DOWN detected -> navigatePrevious() (to lower section)')
       this.navigatePrevious() // Scroll down goes to previous section (s1 direction)
     } else {
-      console.log('Scroll UP -> navigateNext() (to higher section)')
+      console.log('Scroll UP detected -> navigateNext() (to higher section)')
       this.navigateNext() // Scroll up goes to next section (s7 direction)
     }
-  }
-  
-  handleArchiveScroll(deltaX) {
-    // Placeholder for archive timeline scrolling
-    console.log('Handling archive timeline scroll:', deltaX)
-    // TODO: Implement horizontal timeline navigation
   }
   
   handleTouch() {
