@@ -37,3 +37,4 @@ BUILD_AUDIT.md
 .env.test.local
 .env.production.local
 .DS_Store
+BUILD_AUDIT.md
