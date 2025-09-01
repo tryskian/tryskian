@@ -2,12 +2,12 @@
 
 ## Architecture Overview
 
-This is a **single-page L-shaped navigation portfolio** using GSAP and Vite. The core pattern is a fixed viewport (`.viewport`) containing a wide container (`.container`) that moves both horizontally and vertically via GSAP transforms to create an L-shaped navigation flow.
+This is a **single-page archive portfolio** using GSAP and Vite. The core pattern is a fixed viewport (`.viewport`) containing a wide container (`.container`) that moves both horizontally and vertically via GSAP transforms to create an archive navigation flow.
 
 **Critical Architecture Points:**
 - **Fixed Viewport**: `.viewport` creates a 100vw×100vh mask to prevent section bleedthrough
 - **Transform-Based Movement**: GSAP translates the container via `transform: translate(x, y)` for hardware acceleration
-- **Dual Scroll Behavior**: PROJECT sections handle horizontal scrolling internally, others use vertical L-shaped navigation
+- **Dual Scroll Behavior**: PROJECT sections handle horizontal scrolling internally, others use vertical archive navigation
 
 ## Current Structure (7 Sections)
 
@@ -20,7 +20,7 @@ This is a **single-page L-shaped navigation portfolio** using GSAP and Vite. The
 
 **Enhanced Scroll Logic:**
 - **Within PROJECT sections (indices 2-4)**: Horizontal scroll navigates timeline, vertical scroll exits
-- **All other sections**: Normal L-shaped vertical navigation
+- **All other sections**: Normal archive vertical navigation
 
 ## Key Files & Responsibilities
 
