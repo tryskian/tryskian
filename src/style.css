@@ -80,51 +80,43 @@ html {
 }
 
 .section-4 {
-  top: 200vh;
-  left: 100vw;
-}
-
-.section-5 {
-  top: 300vh;
-  left: 100vw;
-}
-
-.section-6 {
-  top: 300vh;
+  top: 100vh;
   left: 200vw;
 }
 
-.section-7 {
-  top: 300vh;
+.section-5 {
+  top: 100vh;
   left: 300vw;
 }
 
+.section-6 {
+  top: 100vh;
+  left: 400vw;
+}
+
+.section-7 {
+  top: 100vh;
+  left: 500vw;
+}
+
 /* Section Colors */
-.hero {
+.home {
   background: #FF6B6B;
 }
 
 .what-i-do {
-  background: whitesmoke;
+  background: #4ECDC4;
 }
 
-.proj-1 {
+.project {
   background: #45B7D1;
-}
-
-.proj-2 {
-  background: #96CEB4;
-}
-
-.archive {
-  background: #FECA57;
 }
 
 .about {
   background: #FF9FF3;
 }
 
-.say-hi {
+.contact {
   background: #5F27CD;
 }
 

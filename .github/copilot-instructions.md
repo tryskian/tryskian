@@ -6,68 +6,48 @@ This is a **single-page L-shaped navigation portfolio** using GSAP and Vite. The
 
 **Critical Architecture Points:**
 - **Fixed Viewport**: `.viewport` creates a 100vw×100vh mask to prevent section bleedthrough
-- **L-Shaped Layout**: Sections are positioned in an L-shape pattern with specific x/y coordinates
-- **Section Positioning**: Each `.section` is exactly 100vw×100vh positioned absolutely within container
 - **Transform-Based Movement**: GSAP translates the container via `transform: translate(x, y)` for hardware acceleration
+- **Dual Scroll Behavior**: PROJECT sections handle horizontal scrolling internally, others use vertical L-shaped navigation
 
-## L-Shaped Navigation Flow
+## Current Structure (7 Sections)
 
-The navigation is **linear through 5 sections** but with **L-shaped visual positioning**:
-1. **home** (section 1)
-2. **what i do** (section 2) 
-3. **project** (sections 3-5) - **spans 3 horizontal sections with draggable timeline**
-4. **about** (section 6)
-5. **contact** (section 7)
+**Navigation Flow: VERTICAL → HORIZONTAL → VERTICAL**
+1. **HOME** (section-1) - Red background
+2. **WHAT I DO** (section-2) - Teal background  
+3. **PROJECT** (sections 3-5) - Blue background, spans 3 horizontal sections with internal timeline
+4. **ABOUT** (section-6) - Pink background
+5. **CONTACT** (section-7) - Purple background
 
-**Project Section Special Behavior:**
-- **Horizontal scroll/drag**: Navigate through project timeline within sections 3-5
-- **Vertical scroll**: Exit project area to next/previous main sections
-
-**Scroll down** = Next section (1→2→3→6→7)  
-**Scroll up** = Previous section (7→6→3→2→1)
+**Enhanced Scroll Logic:**
+- **Within PROJECT sections (indices 2-4)**: Horizontal scroll navigates timeline, vertical scroll exits
+- **All other sections**: Normal L-shaped vertical navigation
 
 ## Key Files & Responsibilities
 
-- **`src/main.js`**: HorizontalPortfolio class handles L-shaped navigation with both x/y transforms
-- **`src/style.css`**: Critical viewport masking and section positioning (see `.viewport` and `.section` rules)
-- **`index.html`**: 7 sections with `data-bg` attributes, where sections 3-5 create the horizontal project timeline
+- **`src/main.js`**: HorizontalPortfolio class with enhanced PROJECT section scroll detection
+- **`src/style.css`**: Section positioning system and color definitions
+- **`index.html`**: 7 sections where sections 3-5 all have class "project"
 
-## Development Patterns
+## Critical Navigation Patterns
 
-**Scroll Direction Logic (Normal - WORKING VERSION):**
+**Transform Coordinates (matches CSS positions):**
 ```js
-if (delta > 0) {
-  this.navigateNext()  // Scroll down: section 1→2→3→4→5→6→7
-} else {
-  this.navigatePrevious()  // Scroll up: section 7→6→5→4→3→2→1
+this.positions = {
+  0: { x: 0, y: 0 },       // home: top: 0vh, left: 0vw
+  1: { x: -100, y: 0 },    // what-i-do: top: 0vh, left: 100vw  
+  2: { x: -100, y: -100 }, // project-1: top: 100vh, left: 100vw
+  3: { x: -200, y: -100 }, // project-2: top: 100vh, left: 200vw
+  4: { x: -300, y: -100 }, // project-3: top: 100vh, left: 300vw
+  5: { x: -400, y: -100 }, // about: top: 100vh, left: 400vw
+  6: { x: -500, y: -100 }  // contact: top: 100vh, left: 500vw
 }
 ```
 
-**L-Shaped Visual Positioning (with 3-section project span):**
+**PROJECT Section Detection:**
 ```js
-const positions = {
-  0: { x: 0, y: 0 },       // home (top-left)
-  1: { x: -100, y: 0 },    // what-i-do (horizontal right)
-  2: { x: -100, y: -100 }, // project-1 (vertical down)
-  3: { x: -100, y: -200 }, // project-2 (vertical down) 
-  4: { x: -100, y: -300 }, // project-3 (vertical down)
-  5: { x: -200, y: -300 }, // about (horizontal right)
-  6: { x: -300, y: -300 }  // contact (horizontal right)
-}
-```
-
-**Section Management:**
-- Always call `setupInitialState()` to force exact `100vw` widths on sections
-- Use `Math.floor(window.innerWidth)` for pixel-perfect positioning
-- Maintain `this.currentSection` index and validate bounds before animation
-- Follow linear progression (1→2→3→4→5→6→7) with L-shaped visual layout
-
-**Critical CSS Pattern:**
-```css
-.section {
-  width: 100vw !important;
-  height: 100vh !important;
-  position: absolute;
+const isProjectSection = this.currentSection >= 2 && this.currentSection <= 4
+if (isProjectSection && Math.abs(deltaX) > Math.abs(deltaY)) {
+  this.handleProjectScroll(deltaX) // Internal horizontal navigation
 }
 ```
 
@@ -75,32 +55,26 @@ const positions = {
 
 ```bash
 npm run dev    # Vite dev server on :5173
-npm run build  # Production build to dist/
+pkill -f vite  # Kill dev server
+npm run build  # Production build
 ```
-
-**Debugging Commands:**
-- Check console for "Going to section X/Y" logs during navigation
-- Inspect `.container` transform values in DevTools
-- Verify section widths match viewport exactly
 
 ## Project-Specific Conventions
 
-1. **Section Count**: Hardcoded to 7 everywhere - update HTML, CSS color classes (.section-1 through .section-7), and positioning coordinates
-2. **L-Shape Layout**: Sections positioned in specific x/y coordinates, not linear arrangement
-3. **Navigation Flow**: Follows L-pattern: horizontal → vertical → horizontal, not simple next/prev
-4. **Animation Blocking**: `this.isAnimating` prevents concurrent animations - always reset in `onComplete`
-5. **Resize Handling**: Debounced resize recalculates positioning without re-animation
+1. **File Coordination**: HTML sections, CSS positions, and JS coordinates must stay synchronized
+2. **PROJECT Sections**: Sections 3-5 share same class and background color but different positions
+3. **Scroll Cooldown**: 1400ms cooldown prevents scroll spam - adjust `this.scrollCooldown`
+4. **Animation Blocking**: Always check `this.isAnimating` before navigation and reset in `onComplete`
 
 ## Integration Points
 
-- **Netlify**: Auto-deploys from main branch (empty netlify.toml relies on defaults)
-- **GSAP**: Only uses core GSAP, no ScrollTrigger despite imports
-- **Touch Events**: Uses `{ passive: true }` for performance on mobile
+- **GSAP**: Core library only, transforms container position for hardware acceleration
+- **Netlify**: Auto-deployment with empty netlify.toml (uses defaults)
+- **Vite**: Module bundler with GSAP dependency
 
 ## Common Pitfalls
 
-- **Section Width Drift**: Sections can lose exact 100vw sizing - always re-enforce in `setupInitialState()`
-- **Transform Precision**: Use `Math.floor()` for pixel-perfect positioning
-- **Animation State**: Forgetting to set `this.isAnimating = false` breaks navigation
-- **Viewport Overflow**: Missing `.viewport` wrapper causes horizontal scrollbars
-- **L-Pattern Breaks**: Navigation must follow L-shape flow, not linear prev/next logic
+- **Coordinate Mismatches**: CSS section positions must align with JS transform coordinates
+- **PROJECT Section Logic**: Remember sections 3-5 are indices 2-4 in JavaScript (0-based)
+- **Animation State**: Forgetting `this.isAnimating = false` breaks subsequent navigation
+- **Section Width Enforcement**: Call `setupInitialState()` to maintain exact 100vw sections

@@ -10,15 +10,15 @@ class HorizontalPortfolio {
     this.totalSections = this.sections.length
     this.isAnimating = false
     
-    // L-shaped section positioning (visual only)
+    // L-shaped section positioning (matches CSS positions)
     this.positions = {
-      0: { x: 0, y: 0 },       // hero (top-left)
-      1: { x: -100, y: 0 },    // what-i-do (horizontal right)
-      2: { x: -100, y: -100 }, // proj-1 (vertical down)
-      3: { x: -100, y: -200 }, // proj-2 (vertical down)
-      4: { x: -100, y: -300 }, // archive (vertical down)
-      5: { x: -200, y: -300 }, // about (horizontal right)
-      6: { x: -300, y: -300 }  // say-hi (horizontal right)
+      0: { x: 0, y: 0 },       // home: top: 0vh, left: 0vw
+      1: { x: -100, y: 0 },    // what-i-do: top: 0vh, left: 100vw  
+      2: { x: -100, y: -100 }, // project-1: top: 100vh, left: 100vw
+      3: { x: -200, y: -100 }, // project-2: top: 100vh, left: 200vw
+      4: { x: -300, y: -100 }, // project-3: top: 100vh, left: 300vw
+      5: { x: -400, y: -100 }, // about: top: 100vh, left: 400vw
+      6: { x: -500, y: -100 }  // contact: top: 100vh, left: 500vw
     }
     
     // Smooth scrolling properties
@@ -95,8 +95,8 @@ class HorizontalPortfolio {
       return
     }
     
-    // Check if we're in the archive section (index 4)
-    const isArchiveSection = this.currentSection === 4
+    // Check if we're in the PROJECT sections (indices 2-4)
+    const isProjectSection = this.currentSection >= 2 && this.currentSection <= 4
     
     // Add threshold to prevent small scroll events from triggering navigation
     const deltaY = e.deltaY
@@ -105,17 +105,17 @@ class HorizontalPortfolio {
     
     console.log(`Scroll detected - deltaY: ${deltaY}, deltaX: ${deltaX}, section: ${this.currentSection}`)
     
-    if (isArchiveSection) {
-      // In archive section: horizontal scroll stays in section, vertical scroll navigates
+    if (isProjectSection) {
+      // In PROJECT sections: horizontal scroll stays in sections 3-5, vertical scroll navigates out
       if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > threshold) {
-        // Horizontal scroll - handle archive timeline navigation
-        console.log('Archive horizontal scroll:', deltaX > 0 ? 'right' : 'left')
-        this.handleArchiveScroll(deltaX)
+        // Horizontal scroll - handle project timeline navigation
+        console.log('Project horizontal scroll:', deltaX > 0 ? 'right' : 'left')
+        this.handleProjectScroll(deltaX)
         return
       }
     }
     
-    // Regular vertical navigation for all sections (including archive vertical scroll)
+    // Regular vertical navigation for all sections (including project vertical scroll to exit)
     if (Math.abs(deltaY) < threshold) {
       console.log('Scroll too small, ignoring')
       return
@@ -126,17 +126,26 @@ class HorizontalPortfolio {
     // Inverted scroll direction (your working version)
     if (deltaY > 0) {
       console.log('Scroll DOWN -> navigatePrevious() (to lower section)')
-      this.navigatePrevious() // Scroll down goes to previous section (s1 direction)
+      this.navigatePrevious()
     } else {
-      console.log('Scroll UP -> navigateNext() (to higher section)')
-      this.navigateNext() // Scroll up goes to next section (s7 direction)
+      console.log('Scroll UP -> navigateNext() (to higher section)')  
+      this.navigateNext()
     }
   }
   
-  handleArchiveScroll(deltaX) {
-    // Placeholder for archive timeline scrolling
-    console.log('Handling archive timeline scroll:', deltaX)
-    // TODO: Implement horizontal timeline navigation
+  handleProjectScroll(deltaX) {
+    // Handle horizontal scrolling within PROJECT sections (2-4)
+    if (deltaX > 0 && this.currentSection < 4) {
+      // Scroll right - move to next project section
+      console.log('Project scroll right: section', this.currentSection, '→', this.currentSection + 1)
+      this.navigateToSection(this.currentSection + 1)
+    } else if (deltaX < 0 && this.currentSection > 2) {
+      // Scroll left - move to previous project section  
+      console.log('Project scroll left: section', this.currentSection, '→', this.currentSection - 1)
+      this.navigateToSection(this.currentSection - 1)
+    } else {
+      console.log('Project horizontal scroll at boundary')
+    }
   }
   
   handleTouch() {
@@ -160,7 +169,8 @@ class HorizontalPortfolio {
       console.log('Animation in progress, skipping')
       return
     }
-    
+
+    // Navigation flow: 0→1→2→3→4→5→6 (vertical→horizontal→vertical)
     if (this.currentSection < this.totalSections - 1) {
       console.log('Moving from section', this.currentSection, 'to', this.currentSection + 1)
       this.navigateToSection(this.currentSection + 1)
@@ -176,6 +186,7 @@ class HorizontalPortfolio {
       return
     }
     
+    // Navigation flow: 6→5→4→3→2→1→0 (vertical→horizontal→vertical)
     if (this.currentSection > 0) {
       console.log('Moving from section', this.currentSection, 'to', this.currentSection - 1)
       this.navigateToSection(this.currentSection - 1)
