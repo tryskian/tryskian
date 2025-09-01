@@ -12,23 +12,25 @@ This is a **single-page L-shaped navigation portfolio** using GSAP and Vite. The
 
 ## L-Shaped Navigation Flow
 
-The navigation is **linear like 7 vertical sections** (1→2→3→4→5→6→7), but with **L-shaped visual positioning**:
-1. **hero** (section 1)
+The navigation is **linear through 5 sections** but with **L-shaped visual positioning**:
+1. **home** (section 1)
 2. **what i do** (section 2) 
-3. **proj 1** (section 3)
-4. **proj 2** (section 4)
-5. **archive** (section 5)
-6. **about** (section 6)
-7. **say hi** (section 7)
+3. **project** (sections 3-5) - **spans 3 horizontal sections with draggable timeline**
+4. **about** (section 6)
+5. **contact** (section 7)
 
-**Scroll down** = Next section (1→2→3→4→5→6→7)  
-**Scroll up** = Previous section (7→6→5→4→3→2→1)
+**Project Section Special Behavior:**
+- **Horizontal scroll/drag**: Navigate through project timeline within sections 3-5
+- **Vertical scroll**: Exit project area to next/previous main sections
+
+**Scroll down** = Next section (1→2→3→6→7)  
+**Scroll up** = Previous section (7→6→3→2→1)
 
 ## Key Files & Responsibilities
 
 - **`src/main.js`**: HorizontalPortfolio class handles L-shaped navigation with both x/y transforms
 - **`src/style.css`**: Critical viewport masking and section positioning (see `.viewport` and `.section` rules)
-- **`index.html`**: 7 sections with `data-bg` attributes and `.section-N` classes positioned in L-shape
+- **`index.html`**: 7 sections with `data-bg` attributes, where sections 3-5 create the horizontal project timeline
 
 ## Development Patterns
 
@@ -41,16 +43,16 @@ if (delta > 0) {
 }
 ```
 
-**L-Shaped Visual Positioning (but linear navigation):**
+**L-Shaped Visual Positioning (with 3-section project span):**
 ```js
 const positions = {
-  0: { x: 0, y: 0 },       // hero (top-left)
+  0: { x: 0, y: 0 },       // home (top-left)
   1: { x: -100, y: 0 },    // what-i-do (horizontal right)
-  2: { x: -100, y: -100 }, // proj-1 (vertical down)
-  3: { x: -100, y: -200 }, // proj-2 (vertical down)
-  4: { x: -100, y: -300 }, // archive (vertical down)
+  2: { x: -100, y: -100 }, // project-1 (vertical down)
+  3: { x: -100, y: -200 }, // project-2 (vertical down) 
+  4: { x: -100, y: -300 }, // project-3 (vertical down)
   5: { x: -200, y: -300 }, // about (horizontal right)
-  6: { x: -300, y: -300 }  // say-hi (horizontal right)
+  6: { x: -300, y: -300 }  // contact (horizontal right)
 }
 ```
 
