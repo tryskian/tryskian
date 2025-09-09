@@ -1,0 +1,32 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	ignorecase = true
+	precomposeunicode = true
+[lfs]
+	repositoryformatversion = 0
+[remote "origin"]
+	url = git@github.com:tryskian/tryskian.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "main"]
+	remote = origin
+	merge = refs/heads/main
+	vscode-merge-base = origin/main
+[branch "archive-v1"]
+	remote = origin
+	merge = refs/heads/archive-v1
+	vscode-merge-base = origin/main
+[branch "010925-1620"]
+	remote = origin
+	merge = refs/heads/010925-1517
+	vscode-merge-base = origin/010925-1517
+[user]
+	mvpbot = vibeary-archive-2025
+[branch "archive"]
+	remote = origin
+	merge = refs/heads/archive
+	vscode-merge-base = origin/main
+[branch "check"]
+	vscode-merge-base = origin/main
