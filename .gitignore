@@ -16,11 +16,15 @@ dist
 dist-ssr
 *.local
 
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
 .idea
 .DS_Store
+.docs/*
+!.tryskian/scripts/*
+
 
 # Auto-generated files
 BUILD_AUDIT.md
@@ -29,6 +33,8 @@ BUILD_AUDIT.md
 *.njsproj
 *.sln
 *.sw?
+copilot-instructions.md
+editAgent_69f50e44.copilotmd
 
 # Environment variables
 .env
