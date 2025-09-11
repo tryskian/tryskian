@@ -1,0 +1,43 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Append & Open Chat Log",
+      "type": "shell",
+      "command": "zsh",
+      "args": [
+        "-c",
+        "echo '\\n---\\n## Chat Export - '$(date '+%Y-%m-%d %H:%M:%S')\\n' >> docs/chat-log.md && pbpaste >> docs/chat-log.md && echo '\\n' >> docs/chat-log.md && code docs/chat-log.md"
+      ],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Append Chat Export (Clipboard)",
+      "type": "shell",
+      "command": "zsh",
+      "args": [
+        "-c",
+        "echo '\\n---\\n## Chat Export - '$(date '+%Y-%m-%d %H:%M:%S')\\n' >> docs/chat-log.md && pbpaste >> docs/chat-log.md && echo '\\n' >> docs/chat-log.md"
+      ],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      },
+      "problemMatcher": []
+    }
+  ]
+}

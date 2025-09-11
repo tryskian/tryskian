@@ -1,0 +1,7 @@
+[
+  {
+    "key": "cmd+shift+;",
+    "command": "workbench.action.tasks.runTask",
+    "args": "Append & Open Chat Log"
+  }
+]

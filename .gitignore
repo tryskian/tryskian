@@ -20,21 +20,22 @@ dist-ssr
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
+!.vscode/tasks.json
+!.vscode/keybindings.json
 .idea
 .DS_Store
-.docs/*
-!.tryskian/scripts/*
 
-
-# Auto-generated files
-BUILD_AUDIT.md
+# Visual Studio files
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# Auto-generated files
+BUILD_AUDIT.md
 copilot-instructions.md
-editAgent_69f50e44.copilotmd
+editAgent_*.copilotmd
 
 # Environment variables
 .env
@@ -42,4 +43,8 @@ editAgent_69f50e44.copilotmd
 .env.development.local
 .env.test.local
 .env.production.local
-.DS_Store
+
+# Temporary files
+*.tmp
+*.temp
+*~
